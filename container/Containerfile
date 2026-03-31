@@ -3,6 +3,9 @@ FROM quay.io/toolbx/ubuntu-toolbox:24.04
 LABEL com.github.containers.toolbox="true"
 LABEL name="toolbox-firmaok"
 
+COPY container/init-firmaok.sh /usr/local/bin/init-firmaok.sh
+COPY container/xdg-open-wrapper.sh /usr/local/bin/xdg-open-wrapper.sh
+
 RUN <<EOF
 set -eux
 apt-get update
@@ -10,12 +13,13 @@ apt-get install -y --no-install-recommends \
     wget \
     desktop-file-utils \
     xdg-utils \
+    libglib2.0-bin \
     libglx0 \
-    nautilus \
-    evince
+    pcmanfm \
+    xpdf
 apt-get clean
 rm -rf /var/lib/apt/lists/*
+chmod +x /usr/local/bin/init-firmaok.sh
+mv /usr/bin/xdg-open /usr/bin/xdg-open.real
+install -m 0755 /usr/local/bin/xdg-open-wrapper.sh /usr/bin/xdg-open
 EOF
-
-COPY container/init-firmaok.sh /usr/local/bin/init-firmaok.sh
-RUN chmod +x /usr/local/bin/init-firmaok.sh

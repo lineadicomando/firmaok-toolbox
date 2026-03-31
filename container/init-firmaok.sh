@@ -12,8 +12,10 @@ LAUNCHER_PATH="${APP_DIR}/launcher_linux.com"
 ICON_SOURCE_PATH="${APP_DIR}/System/Commons/links/icon.png"
 TOOLBOX_NAME="${FIRMAOK_TOOLBOX_NAME:-firmaok-toolbox}"
 WRAPPER_PATH="${BIN_DIR}/firmaOK"
+FIRMAOK_XDG_CONFIG_DIR="${APP_DIR}/.xdg-config"
+MIMEAPPS_PATH="${FIRMAOK_XDG_CONFIG_DIR}/mimeapps.list"
 
-mkdir -p "${APP_DIR}" "${BIN_DIR}" "${ICON_DIR}" "${APPLICATIONS_DIR}"
+mkdir -p "${APP_DIR}" "${BIN_DIR}" "${ICON_DIR}" "${APPLICATIONS_DIR}" "${FIRMAOK_XDG_CONFIG_DIR}"
 
 if [[ ! -x "${LAUNCHER_PATH}" || ! -f "${ICON_SOURCE_PATH}" || $(grep -c 'ulimit -c 0' "${LAUNCHER_PATH}" 2>/dev/null || true) -gt 0 ]]; then
   wget --show-progress --progress=bar:force:noscroll -O "${ARCHIVE_PATH}" "${ARCHIVE_URL}"
@@ -21,11 +23,18 @@ if [[ ! -x "${LAUNCHER_PATH}" || ! -f "${ICON_SOURCE_PATH}" || $(grep -c 'ulimit
   rm -f "${ARCHIVE_PATH}"
 fi
 
+cat >"${MIMEAPPS_PATH}" <<EOF
+[Default Applications]
+application/pdf=xpdf.desktop
+inode/directory=pcmanfm.desktop
+EOF
+
 rm -f "${WRAPPER_PATH}"
 cat >"${WRAPPER_PATH}" <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
 ulimit -c 0
+export XDG_CONFIG_HOME="${FIRMAOK_XDG_CONFIG_DIR}"
 exec "${LAUNCHER_PATH}" "\$@"
 EOF
 chmod +x "${WRAPPER_PATH}"
