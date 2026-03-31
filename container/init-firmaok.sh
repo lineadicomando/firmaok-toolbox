@@ -16,7 +16,7 @@ WRAPPER_PATH="${BIN_DIR}/firmaOK"
 mkdir -p "${APP_DIR}" "${BIN_DIR}" "${ICON_DIR}" "${APPLICATIONS_DIR}"
 
 if [[ ! -x "${LAUNCHER_PATH}" || ! -f "${ICON_SOURCE_PATH}" || $(grep -c 'ulimit -c 0' "${LAUNCHER_PATH}" 2>/dev/null || true) -gt 0 ]]; then
-  wget -q -O "${ARCHIVE_PATH}" "${ARCHIVE_URL}"
+  wget --show-progress --progress=bar:force:noscroll -O "${ARCHIVE_PATH}" "${ARCHIVE_URL}"
   tar xzf "${ARCHIVE_PATH}" -C "${APP_DIR}"
   rm -f "${ARCHIVE_PATH}"
 fi
