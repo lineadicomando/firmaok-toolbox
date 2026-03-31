@@ -4,7 +4,7 @@ CONTAINERFILE ?= container/Containerfile
 
 .DEFAULT_GOAL := help
 
-.PHONY: help build create enter install reset setup
+.PHONY: help build create enter install reset setup uninstall
 
 help: ## Mostra i comandi disponibili
 	@echo "Comandi disponibili:"
@@ -28,3 +28,6 @@ install: create ## Installa e configura firmaOK nel toolbox
 
 reset: ## Ferma, rimuove e ricrea il toolbox
 	bash scripts/reset.sh "$(TOOLBOX)" "$(IMAGE)"
+
+uninstall: ## Disinstalla firmaOK e rimuove container/immagine
+	bash scripts/uninstall.sh "$(TOOLBOX)" "$(IMAGE)"

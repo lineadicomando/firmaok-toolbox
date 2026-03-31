@@ -38,6 +38,9 @@ Questo progetto non e' affiliato, sponsorizzato o approvato dai titolari dei mar
 - `make install`: installa/configura firmaOK nel toolbox
 - `make enter`: entra nel toolbox
 - `make reset`: stop + remove + recreate toolbox
+- `make uninstall`: richiede conferma e rimuove container, immagine e file installati in locale
+
+Nota di sicurezza: `make uninstall` e' un'operazione distruttiva e non reversibile. Rimuove `~/.local/opt/firmaOK` e le impostazioni/personalizzazioni locali; e' comunque possibile reinstallare l'ambiente con `make setup`.
 
 Eseguendo `make` senza argomenti si mostra l'help generato dai commenti `##` nel `Makefile`, in italiano.
 
