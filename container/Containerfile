@@ -1,0 +1,21 @@
+FROM quay.io/toolbx/ubuntu-toolbox:24.04
+
+LABEL com.github.containers.toolbox="true"
+LABEL name="toolbox-firmaok"
+
+RUN <<EOF
+set -eux
+apt-get update
+apt-get install -y --no-install-recommends \
+    wget \
+    desktop-file-utils \
+    xdg-utils \
+    libglx0 \
+    nautilus \
+    evince
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+EOF
+
+COPY container/init-firmaok.sh /usr/local/bin/init-firmaok.sh
+RUN chmod +x /usr/local/bin/init-firmaok.sh
