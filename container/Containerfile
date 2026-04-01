@@ -9,17 +9,20 @@ COPY container/xdg-open-wrapper.sh /usr/local/bin/xdg-open-wrapper.sh
 RUN <<EOF
 set -eux
 apt-get update
+echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula seen true" | debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
 apt-get install -y --no-install-recommends \
     wget \
-    desktop-file-utils \
-    xdg-utils \
     libglib2.0-bin \
     libglx0 \
-    pcmanfm \
-    xpdf
+    libnss3 \
+    fontconfig \
+    fontconfig-config \
+    ca-certificates \
+    ttf-mscorefonts-installer
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 chmod +x /usr/local/bin/init-firmaok.sh
-mv /usr/bin/xdg-open /usr/bin/xdg-open.real
 install -m 0755 /usr/local/bin/xdg-open-wrapper.sh /usr/bin/xdg-open
 EOF
