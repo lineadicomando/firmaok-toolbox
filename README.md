@@ -30,6 +30,10 @@ Questo progetto non e' affiliato, sponsorizzato o approvato dai titolari dei mar
 - `scripts/reset.sh`: stop/rimozione container e recreate
 - `Makefile`: comandi operativi
 
+## Debug
+
+Per diagnosticare il comportamento del wrapper `xdg-open`, imposta `FIRMAOK_WRAPPER_DEBUG=1` prima di aprire un file o una cartella. In quel modo il wrapper stampa su `stderr` il flusso di esecuzione, il target risolto e il MIME type rilevato.
+
 ## Target principali
 
 - `make setup`: primo avvio completo (`build install`; `install` crea il toolbox se serve)
