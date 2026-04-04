@@ -116,7 +116,7 @@ remove_file_if_exists() {
   fi
 }
 
-printf 'Stai per disinstallare firmaOK dal toolbox "%s".\n' "${TOOLBOX_NAME}"
+printf 'Stai per disinstallare firmaOK dal container "%s".\n' "${TOOLBOX_NAME}"
 printf "Questa operazione e' irreversibile: impostazioni e personalizzazioni locali andranno perse.\n"
 printf 'Potrai reinstallare in seguito con: make setup\n\n'
 

@@ -1,5 +1,9 @@
+-include .env
+
 IMAGE ?= localhost/firmaok-toolbox:latest
 TOOLBOX ?= firmaok-toolbox
+CONTAINER_BACKEND ?= toolbox
+CONTAINER_NAME ?= $(TOOLBOX)
 CONTAINERFILE ?= container/Containerfile
 
 .DEFAULT_GOAL := help
@@ -15,19 +19,19 @@ help: ## Mostra i comandi disponibili
 build: ## Costruisce l'immagine
 	podman build -t "$(IMAGE)" -f "$(CONTAINERFILE)" .
 
-create: ## Crea il toolbox se manca
-	podman container exists "$(TOOLBOX)" || toolbox create -c "$(TOOLBOX)" -i "$(IMAGE)"
+create: ## Crea il container se manca
+	bash scripts/container-backend.sh create "$(CONTAINER_BACKEND)" "$(CONTAINER_NAME)" "$(IMAGE)"
 
-enter: ## Entra nel toolbox
-	toolbox enter -c "$(TOOLBOX)"
+enter: ## Entra nel container
+	bash scripts/container-backend.sh enter "$(CONTAINER_BACKEND)" "$(CONTAINER_NAME)"
 
 setup: build install ## Flusso iniziale: build + install
 
 install: create ## Installa e configura firmaOK nel toolbox
-	bash scripts/init.sh "$(TOOLBOX)"
+	CONTAINER_BACKEND="$(CONTAINER_BACKEND)" bash scripts/init.sh "$(CONTAINER_NAME)"
 
 reset: ## Ferma, rimuove e ricrea il toolbox
-	bash scripts/reset.sh "$(TOOLBOX)" "$(IMAGE)"
+	CONTAINER_BACKEND="$(CONTAINER_BACKEND)" bash scripts/reset.sh "$(CONTAINER_NAME)" "$(IMAGE)"
 
 uninstall: ## Disinstalla firmaOK e rimuove container/immagine
-	bash scripts/uninstall.sh "$(TOOLBOX)" "$(IMAGE)"
+	bash scripts/uninstall.sh "$(CONTAINER_NAME)" "$(IMAGE)"

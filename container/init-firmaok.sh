@@ -10,10 +10,28 @@ ICON_DIR="${HOME}/.local/share/icons/hicolor/256x256/apps"
 APPLICATIONS_DIR="${HOME}/.local/share/applications"
 LAUNCHER_PATH="${APP_DIR}/launcher_linux.com"
 ICON_SOURCE_PATH="${APP_DIR}/System/Commons/links/icon.png"
-TOOLBOX_NAME="${FIRMAOK_TOOLBOX_NAME:-firmaok-toolbox}"
+CONTAINER_NAME="${FIRMAOK_CONTAINER_NAME:-firmaok-toolbox}"
+CONTAINER_BACKEND="${FIRMAOK_CONTAINER_BACKEND:-toolbox}"
 WRAPPER_PATH="${BIN_DIR}/firmaOK"
 FIRMAOK_XDG_CONFIG_DIR="${APP_DIR}/.xdg-config"
 MIMEAPPS_PATH="${FIRMAOK_XDG_CONFIG_DIR}/mimeapps.list"
+
+desktop_exec_for_backend() {
+  case "${CONTAINER_BACKEND}" in
+    toolbox)
+      printf 'toolbox run -c %s firmaOK\n' "${CONTAINER_NAME}"
+      ;;
+    distrobox)
+      printf 'distrobox enter -n %s -- firmaOK\n' "${CONTAINER_NAME}"
+      ;;
+    *)
+      printf 'Unsupported backend: %s\n' "${CONTAINER_BACKEND}" >&2
+      exit 1
+      ;;
+  esac
+}
+
+DESKTOP_EXEC="$(desktop_exec_for_backend)"
 
 mkdir -p "${APP_DIR}" "${BIN_DIR}" "${ICON_DIR}" "${APPLICATIONS_DIR}" "${FIRMAOK_XDG_CONFIG_DIR}"
 
@@ -44,7 +62,7 @@ cat >"${APPLICATIONS_DIR}/firmaOk.desktop" <<EOF
 [Desktop Entry]
 Type=Application
 Name=firmaOK
-Exec=toolbox run -c ${TOOLBOX_NAME} firmaOK
+Exec=${DESKTOP_EXEC}
 Icon=${ICON_DIR}/firmaok.png
 Categories=Utility;
 Terminal=false

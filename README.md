@@ -54,6 +54,21 @@ Eseguendo `make` senza argomenti si mostra l'help generato dai commenti `##` nel
 - `TOOLBOX` (default `firmaok-toolbox`)
 - `CONTAINERFILE` (default `container/Containerfile`)
 
+## Backend container
+
+Il backend predefinito e' il comportamento Toolbox.
+In alternativa puoi usare Distrobox impostando `CONTAINER_BACKEND=distrobox`.
+
+Puoi configurare backend, nome container e immagine anche via `.env` nella root del progetto:
+
+```bash
+CONTAINER_BACKEND=toolbox
+CONTAINER_NAME=firmaok-toolbox
+IMAGE=localhost/firmaok-toolbox:latest
+```
+
+Nota: il ciclo di vita del container usa esclusivamente Podman.
+
 ## Guida operativa (Fedora)
 
 1) Installare i requisiti (`toolbox`, `git`, `make`):
