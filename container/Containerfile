@@ -1,7 +1,7 @@
 FROM quay.io/toolbx/ubuntu-toolbox:24.04
 
 LABEL com.github.containers.toolbox="true"
-LABEL name="toolbox-firmaok"
+LABEL name="firmaok-container"
 
 COPY container/init-firmaok.sh /usr/local/bin/init-firmaok.sh
 COPY container/xdg-open-wrapper.sh /usr/local/bin/xdg-open-wrapper.sh

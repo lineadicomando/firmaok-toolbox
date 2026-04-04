@@ -26,13 +26,11 @@ Questo progetto non e' affiliato, sponsorizzato o approvato dai titolari dei mar
 
 - `container/Containerfile`: definizione immagine
 - `container/init-firmaok.sh`: installazione idempotente di firmaOK dentro il container
+- `scripts/container-backend.sh`: utilita' per gestione backend (`toolbox`/`distrobox`)
 - `scripts/init.sh`: installazione/configurazione completa (run script nel container + refresh cache desktop/icona sul host)
 - `scripts/reset.sh`: stop/rimozione container e recreate
+- `scripts/uninstall.sh`: rimozione artefatti locali/container/immagine
 - `Makefile`: comandi operativi
-
-## Debug
-
-Per diagnosticare il comportamento del wrapper `xdg-open`, imposta `FIRMAOK_WRAPPER_DEBUG=1` prima di aprire un file o una cartella. In quel modo il wrapper stampa su `stderr` il flusso di esecuzione, il target risolto e il MIME type rilevato.
 
 ## Target principali
 
@@ -71,10 +69,18 @@ Nota: il ciclo di vita del container usa esclusivamente Podman.
 
 ## Guida operativa (Fedora)
 
-1) Installare i requisiti (`toolbox`, `git`, `make`):
+1) Installare i requisiti:
+
+Variante Toolbox:
 
 ```bash
 sudo dnf install -y toolbox git make
+```
+
+Variante Distrobox:
+
+```bash
+sudo dnf install -y distrobox git make
 ```
 
 2) Clonare il repository:
