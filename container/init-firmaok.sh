@@ -19,10 +19,10 @@ MIMEAPPS_PATH="${FIRMAOK_XDG_CONFIG_DIR}/mimeapps.list"
 desktop_exec_for_backend() {
   case "${CONTAINER_BACKEND}" in
     toolbox)
-      printf 'toolbox run -c %s firmaOK\n' "${CONTAINER_NAME}"
+      printf 'toolbox run -c %s ~/.local/bin/firmaOK\n' "${CONTAINER_NAME}"
       ;;
     distrobox)
-      printf 'distrobox enter -n %s -- firmaOK\n' "${CONTAINER_NAME}"
+      printf 'distrobox enter -n %s -- ~/.local/bin/firmaOK\n' "${CONTAINER_NAME}"
       ;;
     *)
       printf 'Unsupported backend: %s\n' "${CONTAINER_BACKEND}" >&2
