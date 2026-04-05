@@ -8,7 +8,7 @@ CONTAINERFILE ?= container/Containerfile
 
 .DEFAULT_GOAL := help
 
-.PHONY: help build create enter install reset setup uninstall
+.PHONY: help build create enter run install reset setup uninstall
 
 help: ## Mostra i comandi disponibili
 	@echo "Comandi disponibili:"
@@ -24,6 +24,9 @@ create: ## Crea il container se manca
 
 enter: ## Entra nel container
 	bash scripts/container-backend.sh enter "$(CONTAINER_BACKEND)" "$(CONTAINER_NAME)"
+
+run: ## Avvia FirmaOK da console
+	bash scripts/container-backend.sh run "$(CONTAINER_BACKEND)" "$(CONTAINER_NAME)" ~/.local/bin/firmaOK
 
 setup: build install ## Flusso iniziale: build + install
 
