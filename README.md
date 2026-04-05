@@ -55,7 +55,7 @@ Eseguendo `make` senza argomenti si mostra l'help generato dai commenti `##` nel
 ## Backend container
 
 Il backend predefinito e' il comportamento Toolbox.
-In alternativa puoi usare Distrobox impostando `CONTAINER_BACKEND=distrobox`.
+In alternativa puoi usare Distrobox impostando `CONTAINER_BACKEND=distrobox`.**
 
 Puoi configurare backend, nome container e immagine anche via `.env` nella root del progetto:
 
@@ -64,6 +64,8 @@ CONTAINER_BACKEND=toolbox
 CONTAINER_NAME=firmaok-toolbox
 IMAGE=localhost/firmaok-toolbox:latest
 ```
+
+**Attenzione: il supporto a distrobox è sperimentale e non completamente testato.
 
 Nota: il ciclo di vita del container usa esclusivamente Podman.
 
