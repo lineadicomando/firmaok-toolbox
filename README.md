@@ -14,6 +14,48 @@ Nel sito ufficiale da cui si scarica l'app (`https://www.poste.it/firma-digitale
 
 Il progetto e' focalizzato sulla **Firma Digitale Remota** e non e' predisposto ne' testato per la funzione **Firma con dispositivo**.
 
+## Guida operativa
+
+### 1 - Installare i requisiti:
+
+#### Fedora/RedHat e derivate
+
+```bash
+sudo dnf install -y podman toolbox git make
+```
+
+#### Arch Linux e derivate
+
+```bash
+sudo pacman -S podman toolbox git make
+```
+
+#### Debian
+
+```bash
+sudo apt update
+sudo apt install podman-toolbox git make
+```
+
+### 2 - Clonare il repository:
+
+```bash
+git clone https://github.com/lineadicomando/firmaok-toolbox.git
+cd firmaok-toolbox
+```
+
+### 3 - Avviare il setup completo al primo utilizzo:
+
+```bash
+make setup
+```
+
+Il setup genera in `~/.local/share/applications` il Desktop Entry per lanciare l'applicazione, tuttavia è possibile avviare firmaOK da console con:
+
+```bash
+make run
+```
+
 ## Note legali
 
 Questo progetto non distribuisce `firmaOK` e non include componenti proprietari di terze parti oltre a quelli eventualmente necessari per l'integrazione o l'automazione locale. Il repository fornisce solo un wrapper/toolbox per semplificare l'esecuzione e la configurazione dell'ambiente.
@@ -38,6 +80,7 @@ Questo progetto non e' affiliato, sponsorizzato o approvato dai titolari dei mar
 - `make build`: build immagine (`$(IMAGE)`)
 - `make create`: crea toolbox (`$(TOOLBOX)`) se non esiste
 - `make install`: installa/configura firmaOK nel toolbox
+- `make run`: avvia firmaOK da console
 - `make enter`: entra nel toolbox
 - `make reset`: stop + remove + recreate toolbox
 - `make uninstall`: richiede conferma e rimuove container, immagine e file installati in locale
@@ -54,7 +97,7 @@ Eseguendo `make` senza argomenti si mostra l'help generato dai commenti `##` nel
 
 ## Backend container
 
-Il backend predefinito e' il comportamento Toolbox.
+Il backend predefinito e' Toolbox.
 In alternativa puoi usare Distrobox impostando `CONTAINER_BACKEND=distrobox`.**
 
 Puoi configurare backend, nome container e immagine anche via `.env` nella root del progetto:
@@ -68,34 +111,3 @@ IMAGE=localhost/firmaok-toolbox:latest
 **Attenzione: il supporto a distrobox è sperimentale e non completamente testato.
 
 Nota: il ciclo di vita del container usa esclusivamente Podman.
-
-## Guida operativa (Fedora)
-
-1) Installare i requisiti:
-
-Variante Toolbox:
-
-```bash
-sudo dnf install -y toolbox git make
-```
-
-Variante Distrobox:
-
-```bash
-sudo dnf install -y distrobox git make
-```
-
-2) Clonare il repository:
-
-```bash
-git clone https://github.com/lineadicomando/firmaok-toolbox.git
-cd firmaok-toolbox
-```
-
-3) Avviare il setup completo al primo utilizzo:
-
-```bash
-make setup
-```
-
-Per gli avvii successivi, `make install` riesegue la parte di installazione/configurazione (e prepara il toolbox se necessario), mentre `make build` e `make create` restano disponibili per aggiornare immagine e toolbox.
